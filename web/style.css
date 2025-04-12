@@ -10,6 +10,9 @@ p:hover,a:hover,h1:hover,h2:hover,li:hover {
 a {
     color: yellow;
 }
+a,p,h1,h2,li {
+    width: fit-content;
+}
 a:hover {
     color: rgb(0,255,0);
 }
@@ -20,4 +23,8 @@ input {
     font-family: monospace;
     outline: none;
     width: 95%;
+}
+hr {
+    border: 0px;
+    border-top: 1px solid rgb(0,255,0);
 }
