@@ -3,6 +3,7 @@ from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtGui import *
 from PySide6.QtCore import *
 import src.toolbar as toolbar
+from src.palette import palette
 from urllib.parse import urlparse
 import sys
 class MainWindow(QMainWindow):
@@ -33,6 +34,7 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
+    app.setPalette(palette)
     window = MainWindow()
     window.show()
     sys.exit(app.exec())

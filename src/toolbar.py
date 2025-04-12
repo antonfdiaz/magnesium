@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 from PySide6.QtGui import *
+from src.about_pop import show_about
 import os
 def add_toolbar(self):
     toolbar = QToolBar()
@@ -34,7 +35,9 @@ def add_toolbar(self):
     dots_button.triggered.connect(self.webview.reload)
     dots_button.setIcon(QIcon("images/dots.png"))
     menu = QMenu()
-    menu.addAction("About")
+    abt_action = QAction("About",self)
+    abt_action.triggered.connect(show_about)
+    menu.addAction(abt_action)
     menu.addAction("Downloads")
     menu.addSeparator()
     exit_action = QAction("Exit",self)
