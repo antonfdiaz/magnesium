@@ -1,7 +1,8 @@
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 from PySide6.QtGui import *
-from src.about_pop import show_about
+from src.popups import *
+from src.config import *
 import os
 def add_toolbar(self):
     toolbar = QToolBar()
@@ -23,7 +24,7 @@ def add_toolbar(self):
     home_button = QAction("Home",self)
     home_button.setIcon(QIcon("images/home.png"))
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    home_button.triggered.connect(lambda:self.webview.setUrl("http://google.com"))
+    home_button.triggered.connect(lambda:self.webview.setUrl(home_url))
     toolbar.addAction(home_button)
     self.url_bar = QLineEdit()
     self.url_bar.returnPressed.connect(lambda:self.webview.setUrl(QUrl.fromUserInput("http://"+self.url_bar.text())))
@@ -38,8 +39,12 @@ def add_toolbar(self):
     dots_button.triggered.connect(self.webview.reload)
     dots_button.setIcon(QIcon("images/dots.png"))
     menu = QMenu()
+    #options menu
     abt_action = QAction("About",self)
     abt_action.triggered.connect(show_about)
+    menu.addAction(abt_action)
+    abt_action = QAction("Homepage...",self)
+    abt_action.triggered.connect(lambda:change_home(self))
     menu.addAction(abt_action)
     menu.addSeparator()
     exit_action = QAction("Exit",self)
