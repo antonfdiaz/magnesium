@@ -24,7 +24,7 @@ def add_toolbar(self):
     home_button = QAction("Home",self)
     home_button.setIcon(QIcon("images/home.png"))
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    home_button.triggered.connect(lambda:self.webview.setUrl(home_url))
+    home_button.triggered.connect(lambda: self.webview.setUrl(QUrl.fromLocalFile(os.path.join(os.path.dirname(current_dir),"web", "newtab.html"))))
     toolbar.addAction(home_button)
     self.url_bar = QLineEdit()
     self.url_bar.returnPressed.connect(lambda:self.webview.setUrl(QUrl.fromUserInput("http://"+self.url_bar.text())))
@@ -42,9 +42,6 @@ def add_toolbar(self):
     #options menu
     abt_action = QAction("About",self)
     abt_action.triggered.connect(show_about)
-    menu.addAction(abt_action)
-    abt_action = QAction("Homepage...",self)
-    abt_action.triggered.connect(lambda:change_home(self))
     menu.addAction(abt_action)
     menu.addSeparator()
     exit_action = QAction("Exit",self)
