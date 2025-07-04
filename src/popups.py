@@ -6,7 +6,7 @@ import requests
 def show_about():
     updated = True
     response = requests.get("https://antonfdiaz.github.io/magnesium/version.txt",timeout=3)
-    if response.text > "0.8":
+    if float(response.text) > 0.9:
         updated = False
 
     msg_box = QMessageBox()

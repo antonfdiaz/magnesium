@@ -31,6 +31,7 @@ class BrowserTab(QWebEngineView):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setUnifiedTitleAndToolBarOnMac(True)
         self.setGeometry(100,100,1050,700)
         self.setWindowIcon(QIcon("images/icon.png"))
 
@@ -69,6 +70,10 @@ class MainWindow(QMainWindow):
             QTabBar::tab:selected:!last {
                 background-color: #ffffff;
                 border-bottom: 1px solid #ffffff;
+            }
+            QToolBar {
+                background-color: #f0f0f0;
+                border: none;
             }""")
 
         self.tabs = QTabWidget(tabsClosable=True)
