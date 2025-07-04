@@ -100,10 +100,10 @@ class MainWindow(QMainWindow):
         if self.tabs.currentIndex() == self.tabs.count()-1 and self.tabs.count() > 1:
             self.tabs.setCurrentIndex(self.tabs.count()-2)
 
-    def add_new_tab(self, url="web/newtab.html"):
+    def add_new_tab(self,url="web/newtab.html"):
         try:
             response = requests.get("https://antonfdiaz.github.io/magnesium/version.txt",timeout=3)
-            if response.text > "0.7":
+            if float(response.text) > 0.9:
                 url = "web/update.html"
             if not QUrl(url).isLocalFile():
                 url = os.path.abspath(url)
@@ -126,24 +126,24 @@ class MainWindow(QMainWindow):
         url = QUrl.fromLocalFile(url)
         browser = BrowserTab(url.toString())
         browser.urlChanged.connect(self.url_changed)
-        i = self.tabs.insertTab(self.tabs.count() - 1, browser, "New Tab")
+        i = self.tabs.insertTab(self.tabs.count()-1,browser,"New Tab")
         self.tabs.setCurrentIndex(i)
         self.webview = browser
 
-    def close_tab(self, index):
+    def close_tab(self,index):
         if self.tabs.tabText(index) == "" or self.tabs.count() <= 2:
             return
         self.tabs.removeTab(index)
         widget = self.tabs.currentWidget()
-        if isinstance(widget, BrowserTab):
+        if isinstance(widget,BrowserTab):
             self.webview = widget
 
-    def url_changed(self, url):
+    def url_changed(self,url):
         browser = self.tabs.currentWidget()
-        if not isinstance(browser, BrowserTab): return
+        if not isinstance(browser,BrowserTab): return
         self.webview = browser
         domain = urlparse(url.toString()).netloc or "New Tab"
-        self.tabs.setTabText(self.tabs.currentIndex(), domain)
+        self.tabs.setTabText(self.tabs.currentIndex(),domain)
         self.update_title()
 
     def update_title(self):
