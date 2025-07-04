@@ -31,7 +31,6 @@ class BrowserTab(QWebEngineView):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("SearcherWeb")
         self.setGeometry(100,100,1050,700)
         self.setWindowIcon(QIcon("images/icon.png"))
 
