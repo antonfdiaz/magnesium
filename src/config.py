@@ -1,1 +1,0 @@
-home_url = "http://google.com"

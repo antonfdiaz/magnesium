@@ -2,7 +2,6 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from src.popups import *
-from src.config import *
 import os
 def add_toolbar(self):
     toolbar = QToolBar()

@@ -35,11 +35,48 @@ class MainWindow(QMainWindow):
         self.setGeometry(100,100,1050,700)
         self.setWindowIcon(QIcon("images/icon.png"))
 
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color: #f0f0f0;
+            }
+            QTabWidget::pane {
+                background-color: #ffffff;
+            }
+            QTabBar::tab:!last {
+                background-color: #e0e0e0;
+                padding: 5px;
+                width: 100px;
+                border: 1px solid #d0d0d0;
+                border-top-left-radius: 12px;
+                border-top-right-radius: 12px;
+                text-align: left;
+            }
+            QTabBar::tab:last {
+                background-color: #ffffff;
+                padding: 5px;
+                width: 16px;
+                height: 16px;
+                border-radius: 8 8 0 0px;
+                margin-left: 2.5px;
+                margin-top: 2.5px;
+                text-align: right;
+            }
+            QTabBar::tab:last:hover {
+                background-color: #ddd;
+            }
+            QTabBar::tab:last:pressed {
+                background-color: #ccc;
+            }
+            QTabBar::tab:selected:!last {
+                background-color: #ffffff;
+                border-bottom: 1px solid #ffffff;
+            }""")
+
         self.tabs = QTabWidget(tabsClosable=True)
         self.tabs.tabCloseRequested.connect(self.close_tab)
         self.tabs.currentChanged.connect(self.update_title)
 
-        self.new_tab_button = QPushButton("+",flat=True)
+        self.new_tab_button = QPushButton("    +",flat=True)
         self.new_tab_button.setFixedWidth(30)
         self.new_tab_button.clicked.connect(lambda: self.add_new_tab())
 
@@ -66,16 +103,28 @@ class MainWindow(QMainWindow):
 
     def add_new_tab(self, url="web/newtab.html"):
         try:
-            response = requests.get("https://antonfdiaz.github.io/searcherWeb/version.txt",timeout=3)
-            if response.text > "0.8":
+            response = requests.get("https://antonfdiaz.github.io/magnesium/version.txt",timeout=3)
+            if response.text > "0.7":
                 url = "web/update.html"
-        except Exception as e:
-            print(f"Could not fetch version.txt: {e}")
-        if not QUrl(url).isLocalFile():
-            url = os.path.abspath(url)
-            url = QUrl.fromLocalFile(url)
-        else:
-            url = QUrl(url)
+            if not QUrl(url).isLocalFile():
+                url = os.path.abspath(url)
+                url = QUrl.fromLocalFile(url)
+            else:
+                url = QUrl(url)
+        except requests.RequestException:
+            response = requests.get("https://antonfdiaz.github.io/searcherWeb/version.txt",timeout=3)
+            if response.text > "0.7":
+                url = "web/update.html"
+            if not QUrl(url).isLocalFile():
+                url = os.path.abspath(url)
+                url = QUrl.fromLocalFile(url)
+            else:
+                url = QUrl(url)
+        if response.status_code != 200:
+            QMessageBox.critical(self,"Error","Failed to check for updates.")
+        url = "web/newtab.html"
+        url = os.path.abspath(url)
+        url = QUrl.fromLocalFile(url)
         browser = BrowserTab(url.toString())
         browser.urlChanged.connect(self.url_changed)
         i = self.tabs.insertTab(self.tabs.count() - 1, browser, "New Tab")
@@ -101,10 +150,10 @@ class MainWindow(QMainWindow):
     def update_title(self):
         browser = self.tabs.currentWidget()
         if not isinstance(browser, BrowserTab):
-            self.setWindowTitle("SearcherWeb")
+            self.setWindowTitle("Magnesium")
             return
         domain = urlparse(browser.url().toString()).netloc
-        self.setWindowTitle(f"{domain} - SearcherWeb" if domain else "SearcherWeb")
+        self.setWindowTitle(f"{domain} - Magnesium" if domain else "Magnesium")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
