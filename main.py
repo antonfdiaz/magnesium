@@ -105,7 +105,7 @@ class MainWindow(QMainWindow):
         if self.tabs.currentIndex() == self.tabs.count()-1 and self.tabs.count() > 1:
             self.tabs.setCurrentIndex(self.tabs.count()-2)
 
-    def add_new_tab(self,url="https://antonfdiaz.github.io/magnesium/web/slaunch.html"):
+    def add_new_tab(self,url="web/newtab.html"):
         try:
             response = requests.get("https://antonfdiaz.github.io/magnesium/version.txt",timeout=3)
             if float(response.text) > 0.9:
