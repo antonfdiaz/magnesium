@@ -1,7 +1,5 @@
-# Magnesium
+# <img width="48" alt="icon" src="images/icon.png"/>  Magnesium
 Magnesium is a web browser made in Python with PySide6.
-
-<img width="916" alt="scrnshot" src="https://github.com/user-attachments/assets/8e40925a-d522-4606-a56a-d9826d1f87d0"/>  
 
 ## How to run:
 1. Download the file
